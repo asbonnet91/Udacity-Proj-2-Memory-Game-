@@ -39,6 +39,7 @@ h1 {
 
 
 .modal_shadow {
+    display: flex;
     position: absolute;
     margin: 0%;
     width: 100%;
@@ -53,8 +54,6 @@ h1 {
 .hide {
     display: none;
 }
-    
-
 
 .modal-box {
        background-color: #fdfd96;
@@ -83,9 +82,16 @@ h1 {
 .rpt_button {
     display: flex;
     justify-content: space-around;
+    align-self: center;
     padding: 1rem;
     width: 60px;
     height: 30px;
+}
+
+.end_stat_list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 /*
  * Styles for the deck of cards

@@ -19,17 +19,19 @@ let timerOff = true;
 let time = 0;
 let minutes = Math.floor(time/60);
 let seconds = Math.floor(time%60);
-let timer = document.querySelector('.timer');
+let clock;
+const timer = document.querySelector('.timer');
 
 
 
-console.log(cardsFlipped);
-console.log(time);
+
+console.log(matchedCards);
+console.log(minutes)
 
 //Section 2: Event Handlers
 
 
-
+//handles card flip click event
 deck.addEventListener('click', (e) => {
     const clickTarget= e.target;
     if (clickTarget.classList.contains('card')) {
@@ -43,6 +45,7 @@ deck.addEventListener('click', (e) => {
      
 })
 
+//handles start timer event once user clicks a card
 deck.addEventListener('click', (e) => {
     const clickTarget = e.Target;
     if (moves === 0) {
@@ -53,39 +56,44 @@ deck.addEventListener('click', (e) => {
 };
 })
 
-
+//time display handler
 if (seconds < 10) {
-    timer.prototype.innerHTML = `${minutes}:0${seconds}`;
-}
-else {
-    timer.prototype.innerHTML = `${minutes}:${seconds}`;
+    timer.innerHTML = `${minutes}:0${seconds}`;
+} else {
+    timer.innerHTML = `${minutes}:${seconds}`;
 }
 
+//restart game handler
 restartbtn.addEventListener('click', (e) => {
     alert("you clicked the restart button!")
     shuffleCards();
 }
 );
 
+//adds to move counter and compares cards once 2 cards are flipped
 if (cardsFlipped.length === 2) {
 compareCards();
 moveCounter();
 console.log(moves)
 };
 
-if (matchedCards === 7) {
+//end game event handler
+if (matchedCards == 7) {
     alert("You won! Great Job!")
+toggleModal();
 };
 
 
 
-//Section 3: Functions
+//SECTION 3: Functions
 
+//adds to array of flipped cards once player has flipped
 function flippedCards(clickTarget) {
     cardsFlipped.push(clickTarget);
     console.log('cardsFlipped');
 }
 
+//compares cards on screen as flipped by user and checks for a match, flips down if not a match
 function compareCards() {
     let firstCard = cardsFlipped[0];
     let secondCard = cardsFlipped[1];
@@ -114,6 +122,7 @@ function compareCards() {
     }
 }
 
+//flips cards on screen
 function flipCard(clickTarget) {
     clickTarget.classList.toggle('open')
     clickTarget.classList.toggle('show')
@@ -129,9 +138,7 @@ function flipCard(clickTarget) {
 
 
 
-
-
-
+//included mathematical shuffle function
 function shuffle() {
     var currentIndex = cardArray.length,
         temporaryValue, randomIndex;
@@ -147,6 +154,7 @@ function shuffle() {
     return cardArray;
 }
 
+//shuffles cards on screen
 function shuffleCards(){
     let cardsToShuffle = cardArray;
     //console.log ('cards to shuffle', cardsToShuffle);
@@ -174,10 +182,7 @@ function newGameboard() {
 
 
 
-//move counter
-//if count = 3; <-- example
-
-
+//display number of moves made by the player
 function moveCounter() {
     moves++;
         const displayCounter = document.querySelector('.moves');
@@ -185,7 +190,7 @@ function moveCounter() {
         console.log("You made this many moves!"+" "+ moves)
     };
 
-
+//star removal based on user score
 function starScore() {
     if ((moves === 12)|| (moves === 21))
     { removeStar();
@@ -193,6 +198,7 @@ function starScore() {
      }
 }
 
+//removes star from scoreboard
 function removeStar() {
     for (star of allStars) {
         if (star.style.display != 'none') {
@@ -204,35 +210,51 @@ function removeStar() {
 
 
 
-
+//starts timer
 function startTimer(){
-    let clock = setInterval(()=> {
+     clock = setInterval(()=> {
         time++;
+        timer.innerHTML= time;
         console.log(time);
-        timer.innerHTML = time;
     }, 1000)
-    //timerDisplay();
 }
 
+function display() {
+    timer.innerHTML = time;
+    console.log(timer);
+    console.log("why is this not working")
+    if (seconds < 10) {
+        timer.innerHTML = `${minutes}:0${seconds}`;
+    } else {
+        timer.innerHTML = `${minutes}:${seconds}`;
+    }
+}
+
+
+//stops timer 
 function stopTimer(){
-    let clock;
     clearInterval(clock);
 }
 
+//turns modal on and off, end game screen
 function toggleModal() {
     let modal = document.querySelector('.modal_shadow');
-    modal.classList.add('hide');
+    modal.classList.toggle('hide');
 }
-toggleModal();
+
+
+
+
 
 /*function timerDisplay () {
+    for (let i=0; i < time; i++) {
     if (seconds < 10) {
-        let timer = document.querySelector('.timer');
         timer.innerHTML = `${minutes}:0${seconds}`;
     }
     else {
         timer.innerHTML = `${minutes}:${seconds}`;
     }
+}
 }
 */
 
