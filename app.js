@@ -83,7 +83,17 @@ if (matchedCards == 7) {
 toggleModal();
 };
 
+document.querySelector('.modal_close').addEventListener('click',()=> {
+    toggleModal();
+    newGameboard();
+}
+)
 
+document.querySelector('.rpt_button').addEventListener('click',()=> {
+    toggleModal();
+    newGameboard();
+    console.log("you reset the game!")
+})
 
 //SECTION 3: Functions
 
@@ -168,16 +178,18 @@ shuffleCards();
 
 
 function newGameboard() {
-    let cardsFlipped = 0;
-    let output = 0;
-    cardArray.shuffle();
-    for (var i = 0; i< cardArray.length; i++) {
-        //logic for flipping all tiles down
+    stopTimer();
+    clockOff = true;
+    time = 0;
+    document.querySelector('.timer').innerHTML = time;
+    moves = 0;
+    document.querySelector('.moves').innerHTML = moves;
+    stars = 0;
+    let starRow = document.querySelectorAll('.stars li');
+    for (star of starRow) {
+        star.style.display = 'inline';
     }
-    document.getElementsByClassName('.deck').innerHTML = output;
-    //this.addEventListener("load" function (resetGame))(('I\'m a new game!')
-    // )
-    //add event listener for resetting the game board, button functionality on html
+    shuffleCards();
 }
 
 
@@ -208,7 +220,16 @@ function removeStar() {
     }
 }
 
-
+function starRating () {
+    stars = document.querySelectorAll('.stars li');
+    starScore = 0;
+    for (star of stars) {
+        if (star.style.display !== 'none') {
+            starScore++;
+        }
+    }
+    return starScore;
+}
 
 //starts timer
 function startTimer(){
@@ -242,8 +263,19 @@ function toggleModal() {
     modal.classList.toggle('hide');
 }
 
-
-
+function endStats(){
+    let stars = starRating();
+    let endStars = document.querySelector('.end_star_score')
+    let endMoves = document.querySelector('.end_moves')
+    let endTime = document.querySelector('.end_time');
+    let timerClock= document.querySelector('.timer').innerHTML;
+    
+    endStars.innerHTML = `Star Rating = ${stars}`
+    endMoves.innerHTML = `Moves = ${moves}`
+    endTime.innerHTML = `Time = ${timerClock}`
+}
+toggleModal();
+endStats();
 
 
 /*function timerDisplay () {
