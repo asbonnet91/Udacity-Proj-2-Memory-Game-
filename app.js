@@ -7,7 +7,8 @@
 
 let cardArray = Array.from(document.querySelectorAll('.card'));
 //['i.fa fa-anchor', 'i.fa fa-anchor', 'i.fa fa-bicycle', 'i.fa fa-bolt', 'i.fa fa-cube', 'i.fa fa-diamond', 'i.fa fa-diamond', 'i.fa fa-plane', 'i.fa fa-leaf', 'i.fa fa-bomb', 'i.fa fa-leaf', 'i.fa fa-bomb', 'i.fa fa-bolt', 'i.fa fa-bicycle', 'i.fa fa-plane', 'i.fa fa-cube'];
-let matchedCards = 0
+let matchedCards = 0;
+let allPairs = 8;
 let cardsFlipped= [];
 const restartbtn = document.querySelector('.restart');
 let deck = document.querySelector('ul.deck');
@@ -30,6 +31,7 @@ console.log(minutes)
 
 //Section 2: Event Handlers
 
+document.onload = cardReset()
 
 //handles card flip click event
 deck.addEventListener('click', (e) => {
@@ -56,12 +58,6 @@ deck.addEventListener('click', (e) => {
 };
 })
 
-//time display handler
-if (seconds < 10) {
-    timer.innerHTML = `${minutes}:0${seconds}`;
-} else {
-    timer.innerHTML = `${minutes}:${seconds}`;
-}
 
 //restart game handler
 restartbtn.addEventListener('click', (e) => {
@@ -78,10 +74,8 @@ console.log(moves)
 };
 
 //end game event handler
-if (matchedCards == 7) {
-    alert("You won! Great Job!")
-toggleModal();
-};
+
+
 
 document.querySelector('.modal_close').addEventListener('click',()=> {
     toggleModal();
@@ -94,6 +88,7 @@ document.querySelector('.rpt_button').addEventListener('click',()=> {
     newGameboard();
     console.log("you reset the game!")
 })
+
 
 //SECTION 3: Functions
 
@@ -116,6 +111,15 @@ function compareCards() {
         console.log(matchedCards);
         moveCounter();
         starScore();
+        if (matchedCards == allPairs) {
+            stopTimer();
+            alert("You won! Great Job!")
+            toggleModal();
+            endStats();
+        }
+        else {
+            console.log("You have " + matchedCards + " matched cards. Is it working or nah?")
+        };
         //card.classList.add("match"); 
         //matchedCards.push(firstCard[i], secondCard[i])
     }
@@ -129,6 +133,7 @@ function compareCards() {
         }, 700);
         moveCounter();
         starScore();
+
     }
 }
 
@@ -189,6 +194,7 @@ function newGameboard() {
     for (star of starRow) {
         star.style.display = 'inline';
     }
+    cardReset();
     shuffleCards();
 }
 
@@ -272,23 +278,10 @@ function endStats(){
     
     endStars.innerHTML = `Star Rating = ${stars}`
     endMoves.innerHTML = `Moves = ${moves}`
-    endTime.innerHTML = `Time = ${timerClock}`
+    endTime.innerHTML = `Time = ${timerClock} seconds`
 }
-toggleModal();
-endStats();
 
 
-/*function timerDisplay () {
-    for (let i=0; i < time; i++) {
-    if (seconds < 10) {
-        timer.innerHTML = `${minutes}:0${seconds}`;
-    }
-    else {
-        timer.innerHTML = `${minutes}:${seconds}`;
-    }
-}
-}
-*/
 
 
 
@@ -307,20 +300,17 @@ function moveCounter() {
     }
 };*/
 
+//function to reset all cards
 
-function gameOver() {
-    //if matched cards = 8, return you win!
-
+function cardReset () {
+    let cards = document.querySelectorAll('.deck li');
+    for (card of cards) {
+        card.className = 'card'
+    }
 }
 
-//shuffle deck class --
 
 
-
-
-
-
-//match cards function--
 
 //if card matches, show, open and remain open (possibly .capture?)
 
