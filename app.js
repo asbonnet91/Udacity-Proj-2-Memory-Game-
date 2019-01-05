@@ -50,7 +50,7 @@ deck.addEventListener('click', (e) => {
 //handles start timer event once user clicks a card
 deck.addEventListener('click', (e) => {
     const clickTarget = e.Target;
-    if (moves === 0) {
+    if (moves === 0 && time===0) {
     if (timerOff=true) {
     startTimer();
     let timeroff = false;
