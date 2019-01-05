@@ -61,7 +61,7 @@ deck.addEventListener('click', (e) => {
 
 //restart game handler
 restartbtn.addEventListener('click', (e) => {
-   newGameboard();
+    newGameboard();
 }
 );
 
@@ -94,14 +94,18 @@ document.querySelector('.rpt_button').addEventListener('click',()=> {
 //adds to array of flipped cards once player has flipped
 function flippedCards(clickTarget) {
     cardsFlipped.push(clickTarget);
-    console.log('cardsFlipped');
 }
+
+
+//logic for if one card is clicked, it can not be unflipped unless a different card is clicked
+
+
 
 //compares cards on screen as flipped by user and checks for a match, flips down if not a match
 function compareCards() {
     let firstCard = cardsFlipped[0];
     let secondCard = cardsFlipped[1];
-    if (firstCard.firstElementChild.className == secondCard.firstElementChild.className) {
+    if (firstCard.firstElementChild.className === secondCard.firstElementChild.className && firstCard !== secondCard) {
         firstCard.classList.toggle('match');
         secondCard.classList.toggle('match')
         cardsFlipped = [];
@@ -241,7 +245,6 @@ function startTimer(){
      clock = setInterval(()=> {
         time++;
         timer.innerHTML= time;
-        console.log(time);
     }, 1000)
 }
 
