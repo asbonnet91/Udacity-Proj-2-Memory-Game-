@@ -61,8 +61,7 @@ deck.addEventListener('click', (e) => {
 
 //restart game handler
 restartbtn.addEventListener('click', (e) => {
-    alert("you clicked the restart button!")
-    shuffleCards();
+   newGameboard();
 }
 );
 
