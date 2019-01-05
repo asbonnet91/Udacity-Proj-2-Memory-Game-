@@ -62,6 +62,7 @@ deck.addEventListener('click', (e) => {
 //restart game handler
 restartbtn.addEventListener('click', (e) => {
     newGameboard();
+    cardReset();
 }
 );
 
@@ -85,7 +86,6 @@ document.querySelector('.modal_close').addEventListener('click',()=> {
 document.querySelector('.rpt_button').addEventListener('click',()=> {
     toggleModal();
     newGameboard();
-    console.log("you reset the game!")
 })
 
 
@@ -205,6 +205,7 @@ function newGameboard() {
 
 //display number of moves made by the player
 function moveCounter() {
+    if (cardsFlipped[0]!==cardsFlipped[1])
     moves++;
         const displayCounter = document.querySelector('.moves');
         displayCounter.innerHTML = moves;
@@ -309,6 +310,7 @@ function cardReset () {
     for (card of cards) {
         card.className = 'card'
     }
+    matchedCards=0;
 }
 
 
