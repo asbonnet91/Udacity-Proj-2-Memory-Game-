@@ -42,12 +42,14 @@ deck.addEventListener('click', flipper)
 };
 
 //handles start timer event once user clicks a card
+deck.addEventListener('click', flipper)
+
 deck.addEventListener('click', (e) => {
     const clickTarget = e.Target;
     if (moves === 0 && time===0) {
     if (timerOff=true) {
     startTimer();
-    let timeroff = false;
+    let timerOff = false;
 };
 }
 if (cardsFlipped.length === 2) {
@@ -60,11 +62,6 @@ if (cardsFlipped.length === 2) {
 
 
 //restart game handler
-restartbtn.addEventListener('click', (e) => {
-    newGameboard();
-    cardReset();
-}
-);
 
 //adds to move counter and compares cards once 2 cards are flipped
 
@@ -75,13 +72,22 @@ restartbtn.addEventListener('click', (e) => {
 document.querySelector('.modal_close').addEventListener('click',()=> {
     toggleModal();
     newGameboard();
+    cardReset();
 }
 )
 
 document.querySelector('.rpt_button').addEventListener('click',()=> {
     toggleModal();
     newGameboard();
+    cardReset();
 })
+
+restartbtn.addEventListener('click', () => {
+    stopTimer();
+    newGameboard();
+    cardReset();
+});
+
 
 
 //SECTION 3: Functions
@@ -125,7 +131,7 @@ function compareCards() {
         firstCard.classList.toggle('match');
         secondCard.classList.toggle('match')
         cardsFlipped = [];
-        matchedCards = matchedCards + 1;
+        matchedCards++;
         console.log("It's a match!")
         console.log(matchedCards);
         enableCards();
@@ -207,18 +213,18 @@ shuffleCards();
 
 
 function newGameboard() {
-    stopTimer();
-    clockOff = true;
+    timerOff = true; 
     time = 0;
     document.querySelector('.timer').innerHTML = time;
     moves = 0;
     document.querySelector('.moves').innerHTML = moves;
     stars = 0;
-    let starRow = document.querySelectorAll('.stars li');
-    for (star of starRow) {
+    let allStars = document.querySelectorAll('.stars li');
+    for (star of allStars) {
         star.style.display = 'inline';
     }
-    cardReset();
+    matchedCards = 0;
+    cardsFlipped = [];
     shuffleCards();
 }
 
@@ -252,14 +258,14 @@ function removeStar() {
 }
 
 function starRating () {
-    stars = document.querySelectorAll('.stars li');
-    starScore = 0;
-    for (star of stars) {
+    allStars = document.querySelectorAll('.stars li');
+    starsScore = 0;
+    for (star of allStars) {
         if (star.style.display !== 'none') {
-            starScore++;
+            starsScore++;
         }
     }
-    return starScore;
+    return starsScore;
 }
 
 //starts timer
@@ -331,15 +337,12 @@ function cardReset () {
     for (card of cards) {
         card.className = 'card'
     }
-    let matchedCards=0;
 };
 
 
 
 
 
-
-//if card matches, show, open and remain open (possibly .capture?)
 
 /*
  * set up the event listener for a card. If a card is clicked:
