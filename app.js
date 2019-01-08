@@ -32,20 +32,14 @@ console.log(minutes)
 //Section 2: Event Handlers
 
 document.onload = cardReset()
+document.onload = enableCards();
 
 //handles card flip click event
-deck.addEventListener('click', (e) => {
-    const clickTarget= e.target;
-    if (clickTarget.classList.contains('card')) {
-        flipCard(clickTarget);
-    }
-    if (cardsFlipped.length < 2) {   
-        flippedCards(clickTarget);
-        compareCards();
-        console.log(cardsFlipped);
-    };
-     
-})
+
+
+function enableCards () {
+deck.addEventListener('click', flipper)
+};
 
 //handles start timer event once user clicks a card
 deck.addEventListener('click', (e) => {
@@ -55,8 +49,14 @@ deck.addEventListener('click', (e) => {
     startTimer();
     let timeroff = false;
 };
+}
+if (cardsFlipped.length === 2) {
+    disableCards();
+    compareCards();
+    moveCounter();
+    console.log(moves)
 };
-})
+});
 
 
 //restart game handler
@@ -67,14 +67,9 @@ restartbtn.addEventListener('click', (e) => {
 );
 
 //adds to move counter and compares cards once 2 cards are flipped
-if (cardsFlipped.length === 2) {
-compareCards();
-moveCounter();
-console.log(moves)
-};
+
 
 //end game event handler
-
 
 
 document.querySelector('.modal_close').addEventListener('click',()=> {
@@ -96,23 +91,44 @@ function flippedCards(clickTarget) {
     cardsFlipped.push(clickTarget);
 }
 
+function flipper(e) {
+    const clickTarget = e.target;
+    if (clickTarget.classList.contains('card')) {
+        flipCard(clickTarget);
+        flippedCards(clickTarget);
+        cardCount();
+    }  
+    };
 
+function cardCount() {
+    if (cardsFlipped.length > 1) {
+    compareCards();
+    console.log(cardsFlipped);
+};
+};
 //logic for if one card is clicked, it can not be unflipped unless a different card is clicked
 
+function disableCards() {
+    deck.removeEventListener('click', flipper)
+};
 
+
+        
 
 //compares cards on screen as flipped by user and checks for a match, flips down if not a match
 function compareCards() {
     let firstCard = cardsFlipped[0];
     let secondCard = cardsFlipped[1];
+    disableCards();
     if (firstCard.firstElementChild.className === secondCard.firstElementChild.className && firstCard !== secondCard) {
+        moveCounter();
         firstCard.classList.toggle('match');
         secondCard.classList.toggle('match')
         cardsFlipped = [];
         matchedCards = matchedCards + 1;
         console.log("It's a match!")
         console.log(matchedCards);
-        moveCounter();
+        enableCards();
         starScore();
         if (matchedCards == allPairs) {
             stopTimer();
@@ -127,18 +143,23 @@ function compareCards() {
         //matchedCards.push(firstCard[i], secondCard[i])
     }
     else {
+        moveCounter();
         cardsFlipped = [];
         console.log("Not a match! try again!")
         setTimeout( () => {
         flipCard(firstCard);
-        flipCard(secondCard);
+        flipCard(secondCard)
         cardsFlipped = [];
         }, 700);
-        moveCounter();
+        cardsFlipped=0;
         starScore();
-
     }
-}
+setTimeout( () => {
+enableCards();
+}, 1000)
+    };
+
+
 
 //flips cards on screen
 function flipCard(clickTarget) {
@@ -205,7 +226,7 @@ function newGameboard() {
 
 //display number of moves made by the player
 function moveCounter() {
-    if (cardsFlipped[0]!==cardsFlipped[1])
+    if (cardsFlipped.length > 1)
     moves++;
         const displayCounter = document.querySelector('.moves');
         displayCounter.innerHTML = moves;
@@ -310,8 +331,10 @@ function cardReset () {
     for (card of cards) {
         card.className = 'card'
     }
-    matchedCards=0;
-}
+    let matchedCards=0;
+};
+
+
 
 
 
