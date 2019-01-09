@@ -1,20 +1,13 @@
-# Memory Game Project
+# Memory Game Project (Concentration)
 
-## Table of Contents
-
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+This is a Memory Game Project as distributed by Udacity in which students build upon starter code to create a fully functional game of Concentration. While it is completed, the game will continue to recieve updates in functionality and design.
 
 ## Instructions
+Please use the JS, CSS and HTML files in the same folder, otherwise the game will not be able to open.
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+## Known Bugs 
+There is an apparent bug with the time increment functionality. The timer tends to speed up abnormally after one completed game. It also continues to run after restart despite the time interval having been cleared according to the debugger.
 
 ## Contributing
+Pull requests are welcome upon review. Thank you and enjoy!
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
